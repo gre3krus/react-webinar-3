@@ -1,5 +1,5 @@
 import React from "react";
-import { createElement } from "../../src/utils.js";
+import { createElement } from "./utils.js";
 import "./styles.css";
 
 /**
