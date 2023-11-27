@@ -9,6 +9,17 @@ import "./styles.css";
  */
 function App({ store }) {
   const list = store.getState().list;
+  
+  const ruPluralRules = new Intl.PluralRules("ru");
+  
+  const getSelectionCountPlural = (selectionCount) => {
+    const rule = ruPluralRules.select(selectionCount);
+    if (rule === "few") {
+      return "раза";
+    } else {
+      return "раз";
+    }
+  };
 
   return (
     <div className="App">
@@ -30,7 +41,7 @@ function App({ store }) {
                 <div className="Item-title">
                   {item.title}
                   {item.selectedCount > 0 &&
-                    ` | Выделяли ${item.selectedCount} раз`}
+                    ` | Выделяли ` | Выделяли ${item.selectedCount} ${getSelectionCountPlural(item.selectedCount)}`}
                 </div>
 
                 <div className="Item-actions">
