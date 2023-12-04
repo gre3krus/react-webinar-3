@@ -3,6 +3,7 @@ import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
+import ModalWindow from "./components/modal";
 
 /**
  * Приложение
@@ -12,6 +13,7 @@ import PageLayout from "./components/page-layout";
 function App({ store }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const list = store.getState().list;
+  const cart = store.getState().cart;
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
@@ -29,10 +31,22 @@ function App({ store }) {
   }, [store]);
 
   return (
-    <PageLayout isModalOpen={isModalOpen} closeModal={closeModal}>
+    <PageLayout>
       <Head title="Магазин" />
-      <Controls onGoModal={openModal} />
-      <List list={list} />
+      <Controls onGoModal={openModal} cart={cart} />
+      <ModalWindow
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        cart={cart}
+        store={store}
+        getTotalPrice={store.getTotalPrice}
+        removeFromCart={store.removeFromCart}
+      />
+      <List
+        list={list}
+        addToCart={store.addToCart}
+        removeFromCart={store.removeFromCart}
+      />
     </PageLayout>
   );
 }

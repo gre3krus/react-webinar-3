@@ -3,7 +3,11 @@
  */
 class Store {
   constructor(initState = {}) {
-    this.state = initState;
+    this.state = {
+      list: initState.list || [],
+      cart: initState.cart || [],
+      isModalOpen: initState.isModalOpen || false,
+    };
     this.listeners = []; // Слушатели изменений состояния
   }
 
@@ -33,7 +37,7 @@ class Store {
    * @param newState {Object}
    */
   setState(newState) {
-    this.state = newState;
+    this.state = { ...this.state, ...newState };
     // Вызываем всех слушателей
     for (const listener of this.listeners) listener();
   }
@@ -45,15 +49,52 @@ class Store {
     });
   }
 
-  /**
-   * Закрытие модального окна
-   */
   closeModal() {
     this.setState({
       ...this.state,
       isModalOpen: false,
     });
   }
+
+  /**
+   * @param item
+   */
+
+  addToCart = (item) => {
+    const cart = [...this.state.cart];
+    const existingItemIndex = cart.findIndex(
+      (cartItem) => cartItem.code === item.code
+    );
+
+    if (existingItemIndex !== -1) {
+      cart[existingItemIndex].count += 1;
+    } else {
+      cart.push({ ...item, count: 1 });
+    }
+
+    this.setState({
+      cart,
+    });
+  };
+
+  /**
+   * @param itemCode
+   */
+
+  removeFromCart = (itemCode) => {
+    const cart = this.state.cart.filter((item) => item.code !== itemCode);
+
+    this.setState({
+      cart,
+    });
+  };
+
+  getTotalPrice = () => {
+    return this.state.cart.reduce(
+      (total, item) => total + item.price * item.count,
+      0
+    );
+  };
 }
 
 export default Store;

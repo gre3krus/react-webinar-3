@@ -1,0 +1,130 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  display: none;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.modal.opened .overlay {
+  display: block;
+}
+
+.modalWindow {
+  position: fixed;
+
+  z-index: 100;
+  width: 960px;
+  height: 407px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 0 0;
+  background: rgb(245, 245, 245);
+  margin-bottom: 71px;
+
+  padding: 20px;
+}
+
+.text {
+  height: 37px;
+  top: 20px;
+  left: 20px;
+  font-family:
+    Arial,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Ubuntu,
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    "PingFang SC",
+    "Hiragino Sans GB",
+    "Microsoft Yahei UI",
+    "Microsoft Yahei",
+    "Source Han Sans CN",
+    sans-serif;
+  color: rgb(0, 0, 0);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 36.797px;
+  text-align: left;
+  z-index: 2;
+}
+
+.exit {
+  width: 76px;
+  height: 21px;
+  flex-shrink: 0;
+}
+
+.cart {
+  display: flex;
+  flex-direction: column;
+
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.cart-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border-top: 1px dashed #ccc;
+
+  padding: 20px;
+  white-space: nowrap;
+  transition: background-color 1s;
+
+  width: 100%;
+}
+
+.title-column {
+  display: flex;
+  gap: 22px;
+}
+
+.product-column {
+  display: flex;
+  gap: 24px;
+}
+
+.div-price {
+  display: flex;
+  gap: 20px;
+  padding-left: 690px;
+  border-top: 1px dashed #ccc;
+  width: 100%;
+}
+
+.total-price {
+  color: #000;
+
+  text-align: right;
+  font-family: Arial;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}

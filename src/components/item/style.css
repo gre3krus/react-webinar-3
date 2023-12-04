@@ -23,3 +23,18 @@
   justify-content: flex-end;
   padding: 20px 20px 20px 10px;
 }
+
+.addCart {
+  width: 76px;
+  height: 21px;
+  flex-shrink: 0;
+
+  color: #000;
+
+  text-align: center;
+  font-family: Arial;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
