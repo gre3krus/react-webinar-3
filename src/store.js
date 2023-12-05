@@ -5,7 +5,7 @@ class Store {
   constructor(initState = {}) {
     this.state = {
       list: initState.list || [],
-      cart: initState.cart || [],
+      cart: initState.cart || {},
       isModalOpen: initState.isModalOpen || false,
     };
     this.listeners = []; // Слушатели изменений состояния
@@ -61,15 +61,13 @@ class Store {
    */
 
   addToCart = (item) => {
-    const cart = [...this.state.cart];
-    const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.code === item.code
-    );
+    const cart = { ...this.state.cart };
+    const existingItem = cart[item.code];
 
-    if (existingItemIndex !== -1) {
-      cart[existingItemIndex].count += 1;
+    if (existingItem) {
+      cart[item.code] = { ...existingItem, count: existingItem.count + 1 };
     } else {
-      cart.push({ ...item, count: 1 });
+      cart[item.code] = { ...item, count: 1 };
     }
 
     this.setState({
@@ -82,7 +80,9 @@ class Store {
    */
 
   removeFromCart = (itemCode) => {
-    const cart = this.state.cart.filter((item) => item.code !== itemCode);
+    const cart = Object.values(this.state.cart).filter(
+      (item) => item.code !== itemCode
+    );
 
     this.setState({
       cart,
@@ -90,7 +90,7 @@ class Store {
   };
 
   getTotalPrice = () => {
-    return this.state.cart.reduce(
+    return Object.values(this.state.cart).reduce(
       (total, item) => total + item.price * item.count,
       0
     );

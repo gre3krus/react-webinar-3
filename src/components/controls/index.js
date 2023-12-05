@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import "./style.css";
 
 function Controls({ onGoModal, cart }) {
-  const totalItems = cart.reduce((total, item) => total + item.count, 0);
-  const totalPrice = cart.reduce(
+  const totalPrice = Object.values(cart).reduce(
     (total, item) => total + item.price * item.count,
     0
   );
+
   const ruPluralRules = new Intl.PluralRules("ru");
 
   const getTotalItemsPlural = (totalItems) => {
@@ -21,13 +21,20 @@ function Controls({ onGoModal, cart }) {
     }
   };
 
+  const uniqueItemCount = Object.keys(cart).length;
+
+  const cartInfoText =
+    uniqueItemCount > 0
+      ? `${uniqueItemCount} ${getTotalItemsPlural(
+          uniqueItemCount
+        )} / ${totalPrice} ₽`
+      : "пусто";
+
   return (
     <div className="Controls">
       <div className="cart-info">
         <p className="in-backer">В корзине:</p>
-        <p className="total-info">
-          {`${totalItems} ${getTotalItemsPlural(totalItems)} / ${totalPrice} ₽`}
-        </p>
+        <p className="total-info">{cartInfoText}</p>
       </div>
       <button className="open-modal" onClick={() => onGoModal()}>
         Перейти
@@ -38,17 +45,12 @@ function Controls({ onGoModal, cart }) {
 
 Controls.propTypes = {
   onGoModal: PropTypes.func,
-  cart: PropTypes.arrayOf(
-    PropTypes.shape({
-      code: PropTypes.number,
-      count: PropTypes.number,
-    })
-  ),
+  cart: PropTypes.object,
 };
 
 Controls.defaultProps = {
   onGoModal: () => {},
-  cart: [],
+  cart: {},
 };
 
 export default React.memo(Controls);

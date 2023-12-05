@@ -29,7 +29,7 @@ function ModalWindow({
             </button>
           </div>
           <div className="cart">
-            {cart.map((item) => (
+            {Object.values(cart).map((item) => (
               <div key={item.code} className="cart-item">
                 <div className="title-column">
                   <div>{item.code}</div>
@@ -58,19 +58,13 @@ function ModalWindow({
 ModalWindow.propTypes = {
   isModalOpen: PropTypes.bool,
   closeModal: PropTypes.func,
-  cart: PropTypes.arrayOf(
-    PropTypes.shape({
-      code: PropTypes.number,
-      title: PropTypes.string,
-      count: PropTypes.number,
-    })
-  ),
+  cart: PropTypes.object,
 };
 
 ModalWindow.defaultProps = {
   isModalOpen: false,
   closeModal: () => {},
-  cart: [],
+  cart: {},
 };
 
 export default React.memo(ModalWindow);
